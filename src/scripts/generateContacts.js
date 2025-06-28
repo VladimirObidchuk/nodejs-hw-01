@@ -5,15 +5,18 @@ import { readContacts } from '../utils/readContacts.js';
 
 export const generateContacts = async (number) => {
   try {
+    const contacts = await readContacts();
     const newContacts = faker.helpers.multiple(createFakeContact, {
       count: number,
     });
-    console.log(' newContacts', newContacts);
-    const contacts = await readContacts();
+    console.log('newContacts', newContacts);
+
     contacts.push(...newContacts);
-    writeContacts(contacts);
+    await writeContacts(contacts);
+
     return contacts;
   } catch (error) {
     console.error(error.message);
   }
 };
+generateContacts(5);
